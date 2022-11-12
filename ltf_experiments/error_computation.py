@@ -19,7 +19,7 @@ for window in range(1, (ro_size + 1)):
     predictions = pd.read_csv("./results/ETT/dhr_arima/ETTh1_window_" + str(window) + "_dhr_arima.csv")
     all_predictions[str(window)] = np.squeeze(predictions.values)
 
-# perform scaling of the predictions
+# perform scaling of the predictions to compute errors
 mean = 17.1282617
 std = 9.17649102
 
@@ -42,7 +42,7 @@ for window in range(1, (ro_size + 1)):
     predictions = pd.read_csv("./results/ECL/dhr_arima/ECL_window_" + str(window) + "_dhr_arima.csv")
     all_predictions[str(window)] = np.squeeze(predictions.values)
 
-# perform scaling of the predictions
+# perform scaling of the predictions to compute errors
 mean = 3361.17570063
 std = 554.42670238
 
