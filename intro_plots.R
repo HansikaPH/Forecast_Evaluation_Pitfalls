@@ -1,10 +1,11 @@
-# plots in intro
 library(fable)
 library(tsibbledata)
 library(tidyverse)
 library(lubridate)
 library(tsibble)
 library(ggpubr)
+
+# plots in the terminology and motivation sections
 
 # compute the errors for all the methods
 RMSE <- function (pred, true){
@@ -13,17 +14,16 @@ RMSE <- function (pred, true){
 }
 
 
-# figure with forecast horizon, origin
+###### figure with forecast horizon, origin
 data <- tsibbledata::aus_retail %>% filter(`Series ID`=="A3349849A") %>% filter(year(Month)>=1990)
 train_data <- data %>% filter(year(Month)<=2013)
 test_data <- data %>% filter(year(Month)>2013)
 model <- train_data %>% model(ETS(Turnover))
 forecasts <-model %>% forecast(h=60) 
 forecasts %>% autoplot(data, level=NULL)
-# ggplot() + geom_line(dataset=dataset, aes(x=as.Date(Month), y=Turnover), color="black") + geom_line(dataset=forecasts, aes(x=as.Date(Month), y=.mean), color="blue") +theme(legend.position = "right")
 
 
-# Figure with different non-stationarities
+####### Figure with different non-stationarities
 trended_data <- tsibbledata::aus_production %>% mutate(trend=slider::slide_dbl(Electricity, mean, .before = 40)) 
 p1 <- trended_data%>% autoplot(trend) + ylab("Trended Series") + xlab("Time")#trend 
 seasonal_data <- tsibbledata::aus_production %>% mutate(seasonality=difference(log(Beer), lag=1)) %>% filter(year(Quarter)<2000) # seasonality
@@ -35,7 +35,6 @@ data <- data - min(data)
 unit_root_data <- data.frame(date=1:100, data=data)
 p3 <- ggplot(unit_root_data) + geom_line(aes(x=date, y=data)) + ylab("Unit Root Series") + xlab("Time")
 # structural change
-#p4 <- tsibbledata::aus_production %>% autoplot(Beer) + ylab("Series with Changepoint") + xlab("Time")
 data <- tsibbledata::PBS %>% filter(Concession=='Concessional' & Type=='Co-payments'& ATC1=='A' & ATC1_desc == 'Alimentary tract and metabolism' &
                                       ATC2=='A01' & ATC2_desc=='STOMATOLOGICAL PREPARATIONS') %>% filter(year(Month) <= 1997)
 data %>% autoplot(Scripts)
@@ -93,9 +92,6 @@ data_plot %>% autoplot(Turnover, aes(color="Actual")) +
                                "Naive Forecast (Fixed Origin)"="green",
                                "ETS Forecast"="blue")) +
   theme(text = element_text(size = 15), legend.position = "none")
-########## Scatterplot for the naive forecast
-
-#ggplot(data, aes(x=Demand, y=.fitted)) + geom_point(size=1.5) + xlab(label = "Actual") + ylab(label = "Naive Forecast")
 
 ########## Fixed origin naive forecast on multi-horizon forecasting of random walk series
 library(randomForest)
@@ -152,9 +148,6 @@ plot_ts <- myTS[400 : length(myTS)]
 allInd <- 1:length(plot_ts)
 testInd <- allInd[(length(plot_ts) - horizon + 1):length(plot_ts)]
 plot(plot_ts, type="l", xlim=c(0,600), ylim=c(-30, 80), ylab="share price", xlab="time", col="black")
-# lines(testInd, reference, col="black")
-# lines(testInd, predNN, col="green")
-# legend("topleft", legend=c("Reference", "NN prediction"), col=c("black", "green"), lty=1)
 lines(testInd, predictions_RF, col="blue")
 lines(testInd, predictions_SVM, col="purple")
 lines(testInd, predictions_NN, col="green")
@@ -207,14 +200,12 @@ predNN <- predict(modNN, embTS[testInd,-ncol(embTS)])
 
 plot(embTS[trainInd,ncol(embTS), drop=TRUE], type="l", xlim=c(0,1000), ylim=c(-30, 80), ylab="share price", xlab="time")
 lines(testInd, reference, col="black")
-# lines(testInd, predNN, col="green")
-# legend("topleft", legend=c("Reference", "NN prediction"), col=c("black", "green"), lty=1)
 lines(testInd, predRF, col="blue")
 lines(testInd, predSVM, col="orange")
 lines(testInd, predNN, col="green")
 legend("topleft", legend=c("Reference", "Random Forest", "SVM", "Neural Network"), col=c("black", "blue", "orange", "green"), lty=1)
 
-########################################## ML method comparison with differenced series
+################## ML method comparison with differenced series
 
 library(randomForest)
 library(nnet)
