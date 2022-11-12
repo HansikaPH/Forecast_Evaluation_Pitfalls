@@ -1,6 +1,6 @@
 library(fable)
 
-# This is the DHR-ARIMA model for the ETTh1 dataset
+# This is the DHR-ARIMA model for the ETTh1 data
 # This script takes as input the number of the input data file
 
 args <- commandArgs(trailingOnly=TRUE)

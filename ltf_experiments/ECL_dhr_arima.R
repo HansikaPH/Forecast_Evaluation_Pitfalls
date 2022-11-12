@@ -1,6 +1,6 @@
 library(fable)
 
-# This is the DHR-ARIMA model for the ECL dataset
+# This is the DHR-ARIMA model for the ECL data
 # This script takes as input the number of the input data file
 args <- commandArgs(trailingOnly=TRUE)
 file_number <- args[2]

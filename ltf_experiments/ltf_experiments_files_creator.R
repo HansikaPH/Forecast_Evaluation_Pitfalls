@@ -8,11 +8,11 @@ library(fable)
 
 # This script creates the input data files for the ETTh1 and ECL datasets
 # The initial_size and ro_size parameters for each datset are chosen to be compatible with the experiments in the Informer paper
-####################### ETTh1 dataset
+####################### ETTh1 data
 horizon <- 720
 ro_size <- 2144
 
-# read the dataset file
+# read the data file
 dataset <- readr::read_csv("./data/ETT/ETTh1.csv")
 dataset <- dataset %>% select(date, OT)
 data_ts <- dataset %>% as_tsibble(index = date)
@@ -28,18 +28,18 @@ initial_size <- 11520
 rolling_data <- data_ts %>% stretch_tsibble(.init=initial_size, .step=1)
 rolling_data <- rolling_data %>% filter(.id <= ro_size)
 
-# save the dataset to seperate files
+# save the data to seperate files
 for (id in c(1:ro_size)){
   rolling_window <- rolling_data %>% filter(.id == id)
   rolling_window <- rolling_window %>% select(date, OT)
   write.csv(rolling_window, paste0("./data/ETT/ETTh1_window_", id, ".csv"), row.names = FALSE)
 }
 
-####################### ECL dataset
+####################### ECL data
 horizon <- 960
 ro_size <- 4288
 
-# read the dataset file
+# read the data file
 data <- readr::read_csv("../../Informer/data/ECL.csv")
 data <- data %>% select(date, MT_320)
 data_ts <- data %>% as_tsibble(index = date)
@@ -55,7 +55,7 @@ initial_size <- 21044
 rolling_data <- data_ts %>% stretch_tsibble(.init=initial_size, .step=1)
 rolling_data <- rolling_data %>% filter(.id <= ro_size)
 
-# save the dataset to seperate files
+# save the data to seperate files
 for (id in c(1:ro_size)){
   rolling_window <- rolling_data %>% filter(.id == id)
   rolling_window <- rolling_window %>% select(date, MT_320)

@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-# This script contains the naive forecast computation for the exchange rate dataset
+# This script contains the naive forecast computation for the exchange rate data
 horizons = [96, 192, 336, 720]
 
 # compute mae and mse
@@ -13,7 +13,7 @@ def MSE(pred, true):
 
 metrics = pd.DataFrame()
 for horizon in horizons:
-    # read the scaled true values and the validation dataset
+    # read the scaled true values and the validation data
     folder = "Exchange_96_" + str(horizon) + "_Autoformer_custom_ftM_sl96_ll48_pl" + str(horizon) + "_dm512_nh8_el2_dl1_df2048_fc3_ebtimeF_dtTrue_Exp_0"
     scaled_trues = np.load("./results/Exchange_Rate/Autoformer/" + folder + "/true_scaled.npy")
     scaled_valids = np.load("./results/Exchange_Rate/Autoformer/" + folder + "/valid_scaled.npy")

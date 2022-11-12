@@ -10,9 +10,9 @@ def MAE(pred, true):
 def MSE(pred, true):
     return np.mean((pred - true) ** 2)
 
-### ETT dataset
+### ETT data
 scaled_trues = np.load(
-    "./results/ETT/Informer/informer_ETTh1_ftS_sl720_ll336_pl720_dm512_nh8_el2_dl1_df2048_atprob_fc5_ebtimeF_dtTrue_mxTrue_Exp_0/scaled_true.npy")
+    "./results/ETT/Informer/informer_ETTh1_ftS_sl720_ll336_pl720_dm512_nh8_el2_dl1_df2048_atprob_fc5_ebtimeF_dtTrue_mxTrue_Exp_0/true_scaled.npy")
 ro_size = 2144
 all_predictions = pd.DataFrame()
 for window in range(1, (ro_size + 1)):
@@ -33,9 +33,9 @@ all_predictions_reshaped = np.reshape(all_predictions_reshaped, scaled_trues.sha
 MAE(all_predictions_reshaped, scaled_trues)
 MSE(all_predictions_reshaped, scaled_trues)
 
-### ECL dataset
+### ECL data
 scaled_trues = np.load(
-    "./results/ECL/Informer/informer_ECL_ftS_sl960_ll336_pl960_dm512_nh8_el2_dl1_df2048_atprob_fc5_ebtimeF_dtTrue_mxTrue_Exp_0/scaled_true.npy")
+    "./results/ECL/Informer/informer_ECL_ftS_sl960_ll336_pl960_dm512_nh8_el2_dl1_df2048_atprob_fc5_ebtimeF_dtTrue_mxTrue_Exp_0/true_scaled.npy")
 ro_size = 4288
 all_predictions = pd.DataFrame()
 for window in range(1, (ro_size + 1)):
