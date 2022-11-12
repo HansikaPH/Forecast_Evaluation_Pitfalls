@@ -1,2 +1,2 @@
-# forecast_evaluation_pitfalls
-This repository contains the experiments conducted to showcase common pitfalls in forecast evaluation.
+This repository contains the experiments conducted for the publication Forecast Evaluation for Data Scientists: Common Pitfalls and Best Practices.
+
